@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/04985376-5356-4c8a-9059-c0d00483796e/deploy-status)](https://app.netlify.com/sites/secret-santa-fr/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
