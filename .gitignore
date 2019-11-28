@@ -14,9 +14,6 @@
 #secrets
 .env
 
-#generated
-__generated__/
-
 # misc
 .DS_Store
 .env.local
