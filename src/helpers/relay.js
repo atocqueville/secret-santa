@@ -11,10 +11,6 @@ function fetchQuery(
 ) {
   return fetch('https://graphql.fauna.com/graphql', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'authorization': process.env.REACT_APP_FAUNA_API_KEY,
-    },
     body: JSON.stringify({
       query: operation.text,
       variables,

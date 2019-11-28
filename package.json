@@ -27,6 +27,12 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": {
+    "/functions": {
+      "target": "http://localhost:9000",
+      "pathRewrite": { "^/functions": "" }
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -42,6 +48,7 @@
   "devDependencies": {
     "babel-plugin-relay": "^7.1.0",
     "graphql": "^14.5.8",
+    "netlify-lambda": "^1.6.3",
     "relay-compiler": "^7.1.0",
     "relay-config": "^7.1.0"
   }
