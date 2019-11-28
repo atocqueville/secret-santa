@@ -5,7 +5,7 @@ exports.handler = (event, context, callback) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'authorization': process.env.REACT_APP_FAUNA_API_KEY,
+      'authorization': process.env.REACT_APP_FAUNA_SERVER_KEY,
     },
     body: event.body
   }).then(response => {
