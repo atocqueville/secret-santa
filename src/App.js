@@ -15,7 +15,7 @@ function App() {
     }
   }
 `;
-console.log(process.env)
+
 const handleClick = () => {
   fetchQuery(environment, query)
   .then(data => {
