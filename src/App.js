@@ -1,24 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import graphql from 'babel-plugin-relay/macro';
+import {fetchQuery} from 'relay-runtime';
+import environment from './helpers/relay'
+import { Button } from '@material-ui/core'
 
 function App() {
+
+  const query = graphql`
+  query AppExampleQuery {
+    allLists {
+      data {
+        users
+      }
+    }
+  }
+`;
+console.log(process.env)
+const handleClick = () => {
+  fetchQuery(environment, query)
+  .then(data => {
+    console.log(data)
+  });
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      Salut
+      <Button variant='contained' onClick={handleClick}>
+        Bouton
+      </Button>
     </div>
   );
 }

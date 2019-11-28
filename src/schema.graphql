@@ -1,0 +1,118 @@
+directive @embedded on OBJECT
+directive @collection(name: String!) on OBJECT
+directive @index(name: String!) on FIELD_DEFINITION
+directive @resolver(
+  name: String
+  paginated: Boolean! = false
+) on FIELD_DEFINITION
+directive @relation(name: String) on FIELD_DEFINITION
+directive @unique(index: String) on FIELD_DEFINITION
+type ChristmasList {
+  # The document's ID.
+  _id: ID!
+  # The document's timestamp.
+  _ts: Long!
+  users: [String!]!
+}
+
+# 'ChristmasList' input values
+input ChristmasListInput {
+  users: [String!]!
+}
+
+# The pagination object for elements of type 'ChristmasList'.
+type ChristmasListPage {
+  # The elements of type 'ChristmasList' in this page.
+  data: [ChristmasList]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+input CreateListInput {
+  users: [String!]!
+}
+
+scalar Date
+
+# The `Long` scalar type represents non-fractional signed whole numeric values.
+# Long can represent values between -(2^63) and 2^63 - 1.
+scalar Long
+
+type Mutation {
+  # Update an existing document in the collection of 'User'
+  updateUser(
+    # The 'User' document's ID
+    id: ID!
+    # 'User' input values
+    data: UserInput!
+  ): User
+  # Create a new document in the collection of 'ChristmasList'
+  createChristmasList(
+    # 'ChristmasList' input values
+    data: ChristmasListInput!
+  ): ChristmasList!
+  # Create a new document in the collection of 'User'
+  createUser(
+    # 'User' input values
+    data: UserInput!
+  ): User!
+  # Delete an existing document in the collection of 'ChristmasList'
+  deleteChristmasList(
+    # The 'ChristmasList' document's ID
+    id: ID!
+  ): ChristmasList
+  # Delete an existing document in the collection of 'User'
+  deleteUser(
+    # The 'User' document's ID
+    id: ID!
+  ): User
+  addList(list: CreateListInput!): ChristmasList!
+  # Update an existing document in the collection of 'ChristmasList'
+  updateChristmasList(
+    # The 'ChristmasList' document's ID
+    id: ID!
+    # 'ChristmasList' input values
+    data: ChristmasListInput!
+  ): ChristmasList
+}
+
+type Query {
+  # Find a document from the collection of 'User' by its id.
+  findUserByID(
+    # The 'User' document's ID
+    id: ID!
+  ): User
+  # Find a document from the collection of 'ChristmasList' by its id.
+  findChristmasListByID(
+    # The 'ChristmasList' document's ID
+    id: ID!
+  ): ChristmasList
+  allLists(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): ChristmasListPage!
+}
+
+scalar Time
+
+type User {
+  username: String!
+  # The document's ID.
+  _id: ID!
+  mail: String!
+  password: String!
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'User' input values
+input UserInput {
+  username: String!
+  mail: String!
+  password: String!
+}
+
