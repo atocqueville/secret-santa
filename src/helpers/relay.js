@@ -13,7 +13,7 @@ function fetchQuery(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'authorization': process.env.FAUNA_API_KEY,
+      'authorization': process.env.REACT_APP_FAUNA_API_KEY,
     },
     body: JSON.stringify({
       query: operation.text,
