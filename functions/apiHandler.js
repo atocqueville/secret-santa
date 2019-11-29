@@ -12,7 +12,6 @@ export async function handler(event, context) {
       body: event.body
     });
     const body = await response.json()
-    console.log(body)
     return {
       statusCode: 200,
       body: JSON.stringify(body)

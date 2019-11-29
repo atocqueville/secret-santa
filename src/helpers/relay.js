@@ -19,6 +19,8 @@ function fetchQuery(
     return response.json();
   }).then(data => {
     console.log(data)
+    if (data.errors) throw data;
+    return data
   });
 }
 
