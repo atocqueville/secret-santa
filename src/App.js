@@ -20,6 +20,8 @@ const handleClick = () => {
   fetchQuery(environment, query)
   .then(data => {
     console.log(data)
+  }).catch(error => {
+    console.log(error)
   });
 }
 

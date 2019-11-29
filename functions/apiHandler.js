@@ -1,15 +1,26 @@
-exports.handler = (event, context, callback) => {
-  console.log("ici")
-  console.log(JSON.parse(event.body))
+import fetch from "node-fetch";
 
-  return fetch('https://graphql.fauna.com/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'authorization': process.env.REACT_APP_FAUNA_SERVER_KEY,
-    },
-    body: event.body
-  }).then(response => {
-    return response.json();
-  });
+export async function handler(event, context) {
+  const b64encodedSecret = Buffer.from(
+    process.env.FAUNA_DB_SERVER + ":"
+  ).toString("base64")
+  const headers = { Authorization: `Basic ${b64encodedSecret}` }
+  try {
+    const response = await fetch('https://graphql.fauna.com/graphql', {
+      method: 'POST',
+      headers,
+      body: event.body
+    });
+    const body = await response.json()
+    console.log(body)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(body)
+    };
+  } catch (e) {
+    return {
+      statusCode: 400,
+    };
+  }
+  
 }

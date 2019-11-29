@@ -20,23 +20,10 @@ input ChristmasListInput {
   users: [String!]!
 }
 
-# The pagination object for elements of type 'ChristmasList'.
-type ChristmasListPage {
-  # The elements of type 'ChristmasList' in this page.
-  data: [ChristmasList]!
-  # A cursor for elements coming after the current page.
-  after: String
-  # A cursor for elements coming before the current page.
-  before: String
-}
-
-input CreateListInput {
-  users: [String!]!
-}
-
 scalar Date
 
-# The `Long` scalar type represents non-fractional signed whole numeric values.
+# The `Long` scalar type
+ represents non-fractional signed whole numeric values.
 # Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
@@ -68,7 +55,6 @@ type Mutation {
     # The 'User' document's ID
     id: ID!
   ): User
-  addList(list: CreateListInput!): ChristmasList!
   # Update an existing document in the collection of 'ChristmasList'
   updateChristmasList(
     # The 'ChristmasList' document's ID
@@ -89,12 +75,6 @@ type Query {
     # The 'ChristmasList' document's ID
     id: ID!
   ): ChristmasList
-  allLists(
-    # The number of items to return per page.
-    _size: Int
-    # The pagination cursor.
-    _cursor: String
-  ): ChristmasListPage!
 }
 
 scalar Time
