@@ -22,16 +22,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "./node_modules/.bin/netlify deploy --prod",
+    "lambda": "./node_modules/.bin/netlify-lambda serve functions",
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql"
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "proxy": {
-    "/functions": {
-      "target": "http://localhost:9000",
-      "pathRewrite": { "^/functions": "" }
-    }
   },
   "browserslist": {
     "production": [

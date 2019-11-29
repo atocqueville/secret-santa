@@ -9,7 +9,7 @@ function fetchQuery(
   operation,
   variables,
 ) {
-  return fetch('https://graphql.fauna.com/graphql', {
+  return fetch('/.netlify/functions/apiHandler', {
     method: 'POST',
     body: JSON.stringify({
       query: operation.text,

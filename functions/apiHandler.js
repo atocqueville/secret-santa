@@ -1,4 +1,5 @@
 exports.handler = (event, context, callback) => {
+  console.log("ici")
   console.log(JSON.parse(event.body))
 
   return fetch('https://graphql.fauna.com/graphql', {
