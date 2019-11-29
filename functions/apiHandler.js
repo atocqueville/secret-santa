@@ -21,5 +21,4 @@ export async function handler(event, context) {
       statusCode: 400,
     };
   }
-  
 }
