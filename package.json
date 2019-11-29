@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "./node_modules/.bin/netlify deploy --prod",
-    "lambda": "./node_modules/.bin/netlify-lambda serve functions",
+    "dev": "./node_modules/.bin/netlify dev",
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql"
   },
   "eslintConfig": {
