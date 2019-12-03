@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
+    "@reach/router": "^1.2.1",
     "faunadb": "^2.9.4",
     "netlify-cli": "^2.21.0",
     "react": "^16.12.0",
@@ -25,7 +26,7 @@
     "eject": "react-scripts eject",
     "deploy": "./node_modules/.bin/netlify deploy --prod",
     "dev": "./node_modules/.bin/netlify dev",
-    "relay": "relay-compiler --src ./src --schema ./src/schema.graphql"
+    "relay": "relay-compiler --src ./src --schema ./src/schemaFauna.graphql"
   },
   "eslintConfig": {
     "extends": "react-app"
