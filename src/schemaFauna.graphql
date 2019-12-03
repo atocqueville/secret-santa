@@ -1,0 +1,61 @@
+directive @embedded on OBJECT
+directive @collection(name: String!) on OBJECT
+directive @index(name: String!) on FIELD_DEFINITION
+directive @resolver(
+  name: String
+  paginated: Boolean! = false
+) on FIELD_DEFINITION
+directive @relation(name: String) on FIELD_DEFINITION
+directive @unique(index: String) on FIELD_DEFINITION
+type ChristmasList {
+  _id: ID!
+  _ts: Long!
+  users: [User!]!
+}
+
+input ChristmasListInput {
+  users: [ID!]!
+}
+
+scalar Date
+
+scalar Long
+
+type Mutation {
+  updateUser(
+    id: ID!
+    data: UserInput!
+  ): User
+  createChristmasList(data: ChristmasListInput!): ChristmasList!
+  createUser(data: UserInput!): User!
+  deleteChristmasList(id: ID!): ChristmasList
+  deleteUser(id: ID!): User
+  updateChristmasList(
+    id: ID!
+    data: ChristmasListInput!
+  ): ChristmasList
+}
+
+type Query {
+  findUserByID(id: ID!): User
+  findChristmasListByID(id: ID!): ChristmasList
+}
+
+scalar Time
+
+type User {
+  username: String!
+  _id: ID!
+  mail: String!
+  pass: String!
+  list: [ChristmasList!]
+  _ts: Long!
+}
+
+input UserInput {
+  username: String!
+  mail: String!
+  pass: String!
+  list: [ID!]
+}
+
