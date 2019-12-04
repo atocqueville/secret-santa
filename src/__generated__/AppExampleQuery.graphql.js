@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bd6bda6a6858a2b71bbb905dab73e9ac
+ * @relayHash eebaf8ceb8ac5bc1409c5650973efb19
  */
 
 /* eslint-disable */
@@ -11,9 +11,10 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type AppExampleQueryVariables = {||};
 export type AppExampleQueryResponse = {|
-  +allLists: {|
-    +data: $ReadOnlyArray<?{|
-      +users: $ReadOnlyArray<string>
+  +findChristmasListByID: ?{|
+    +users: $ReadOnlyArray<{|
+      +mail: string,
+      +username: string,
     |}>
   |}
 |};
@@ -26,9 +27,10 @@ export type AppExampleQuery = {|
 
 /*
 query AppExampleQuery {
-  allLists {
-    data {
-      users
+  findChristmasListByID(id: "2") {
+    users {
+      mail
+      username
     }
   }
 }
@@ -39,25 +41,38 @@ var v0 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "allLists",
-    "storageKey": null,
-    "args": null,
-    "concreteType": "ChristmasListPage",
+    "name": "findChristmasListByID",
+    "storageKey": "findChristmasListByID(id:\"2\")",
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "id",
+        "value": "2"
+      }
+    ],
+    "concreteType": "ChristmasList",
     "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "data",
+        "name": "users",
         "storageKey": null,
         "args": null,
-        "concreteType": "ChristmasList",
+        "concreteType": "User",
         "plural": true,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "users",
+            "name": "mail",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "username",
             "args": null,
             "storageKey": null
           }
@@ -86,11 +101,11 @@ return {
     "operationKind": "query",
     "name": "AppExampleQuery",
     "id": null,
-    "text": "query AppExampleQuery {\n  allLists {\n    data {\n      users\n    }\n  }\n}\n",
+    "text": "query AppExampleQuery {\n  findChristmasListByID(id: \"2\") {\n    users {\n      mail\n      username\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ac763f33a2efc41bb80a76dc52963ad6';
+(node/*: any*/).hash = 'f11c1bbea329d6f814f5fdde24211602';
 module.exports = node;

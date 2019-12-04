@@ -1,16 +1,21 @@
 import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import {fetchQuery} from 'relay-runtime';
-import environment from './helpers/relay'
-import { Button } from '@material-ui/core'
+import environment from './helpers/relay';
+import { Container } from '@material-ui/core';
 
-function App() {
+import Navbar from './scenes/navbar';
+import Stepper from './scenes/stepper';
+import StepContent from './scenes/main';
+
+export default function App() {
 
   const query = graphql`
   query AppExampleQuery {
-    allLists {
-      data {
-        users
+    findChristmasListByID(id: "2") {
+      users {
+        mail
+        username
       }
     }
   }
@@ -26,13 +31,10 @@ const handleClick = () => {
 }
 
   return (
-    <div>
-      Salut
-      <Button variant='contained' onClick={handleClick}>
-        Bouton
-      </Button>
-    </div>
+    <Container maxWidth={false} style={{ padding: 0 }}>
+      <Navbar />
+      <Stepper />
+      <StepContent />
+    </Container>
   );
 }
-
-export default App;
