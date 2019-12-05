@@ -8,7 +8,7 @@ import SecondPage from './secondPage';
 import ThirdPage from './thirdPage';
 
 const RouteContainer = posed.div({
-  enter: { opacity: 1, delay: 300, beforeChildren: 300 },
+  enter: { opacity: 1, delay: 300 },
   exit: { opacity: 0 }
 });
 
