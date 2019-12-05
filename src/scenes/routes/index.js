@@ -1,38 +1,19 @@
 import React from 'react';
-import { Router, Location } from '@reach/router';
-import posed, { PoseGroup } from 'react-pose';
+import { Router } from '@reach/router';
 import { Grid } from '@material-ui/core';
 
 import FirstPage from './firstPage';
 import SecondPage from './secondPage';
 import ThirdPage from './thirdPage';
 
-const RouteContainer = posed.div({
-  enter: { opacity: 1, delay: 300 },
-  exit: { opacity: 0 }
-});
-
-const PosedRouter = ({ children }) => (
-  <Location>
-    {({ location }) => (
-      <PoseGroup>
-        <RouteContainer key={location.key}>
-          <Router location={location}>{children}</Router>
-        </RouteContainer>
-      </PoseGroup>
-    )}
-  </Location>
-);
-
 export default function Routes() {
-
   return (
     <Grid style={{ padding: 20 }}>
-      <PosedRouter>
+      <Router>
         <FirstPage path="/" />
-        <SecondPage path="second" />
-        <ThirdPage path="third" />
-      </PosedRouter>
+        <SecondPage path="/second" />
+        <ThirdPage path="/third" />
+      </Router>
     </Grid>
   );
 }
