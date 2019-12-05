@@ -6,7 +6,8 @@ import { Container } from '@material-ui/core';
 
 import Navbar from './scenes/navbar';
 import Stepper from './scenes/stepper';
-import StepContent from './scenes/main';
+import StepRoutes from './scenes/routes';
+import StepButtons from './scenes/buttons';
 
 export default function App() {
 
@@ -34,7 +35,8 @@ const handleClick = () => {
     <Container maxWidth={false} style={{ padding: 0 }}>
       <Navbar />
       <Stepper />
-      <StepContent />
+      <StepRoutes />
+      <StepButtons />
     </Container>
   );
 }
