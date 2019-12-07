@@ -1,5 +1,6 @@
 const UPDATE_STEPPER = 'UPDATE_STEPPER';
 const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
+export const DRAWER_WIDTH = 240;
 
 const initialState = {
   stepper: 0,

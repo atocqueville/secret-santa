@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from './scenes/navbar';
 import Drawer from './scenes/drawer';
-import CreatePage from './scenes/create'
+import CreatePage from './scenes/create';
+import EditPage from './scenes/edit';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,6 +51,7 @@ export default function App() {
         <div className={classes.toolbar} />
         <Router>
           <CreatePage path='/' />
+          <EditPage path='/edit' />
         </Router>
       </div>
     </div>

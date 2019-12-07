@@ -4,15 +4,13 @@ import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import { toggleDrawer } from '../../redux/app/ducks'
-
-const drawerWidth = 240;
+import { toggleDrawer, DRAWER_WIDTH } from '../../redux/app/ducks'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
     [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      width: `calc(100% - ${DRAWER_WIDTH}px)`,
+      marginLeft: DRAWER_WIDTH,
     },
   },
   menuButton: {

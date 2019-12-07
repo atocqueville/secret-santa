@@ -1,30 +1,29 @@
 import React from 'react';
+import { Link } from '@reach/router';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import EditIcon from '@material-ui/icons/Edit';
+import RedeemIcon from '@material-ui/icons/Redeem';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { toggleDrawer } from '../../redux/app/ducks';
-
-const drawerWidth = 240;
+import { toggleDrawer, DRAWER_WIDTH } from '../../redux/app/ducks';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
     [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
+      width: DRAWER_WIDTH,
       flexShrink: 0,
     },
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
   },
 }));
 
@@ -36,21 +35,14 @@ function DrawerCustom({ drawerOpen, toggleDrawer, container }) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button component={Link} to="/">
+          <ListItemIcon><RedeemIcon /></ListItemIcon>
+          <ListItemText primary="Create a List" />
+        </ListItem>
+        <ListItem button component={Link} to="/edit">
+          <ListItemIcon><EditIcon /></ListItemIcon>
+          <ListItemText primary="Edit your List" />
+        </ListItem>
       </List>
     </div>
   );
