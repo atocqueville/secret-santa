@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 
 import Stepper from './stepper';
 import StepContent from './content';
-import StepButtons from './buttons';
 
 export default function CreatePage() {
 
@@ -11,7 +10,6 @@ export default function CreatePage() {
     <Grid>
       <Stepper />
       <StepContent />
-      <StepButtons />
     </Grid>
   );
 }
