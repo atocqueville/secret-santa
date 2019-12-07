@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from '@reach/router';
-import graphql from 'babel-plugin-relay/macro';
+// import graphql from 'babel-plugin-relay/macro';
 // import {fetchQuery} from 'relay-runtime';
 // import environment from './helpers/relay';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,16 +20,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const query = graphql`
-  query AppExampleQuery {
-    findChristmasListByID(id: "2") {
-      users {
-        mail
-        username
-      }
-    }
-  }
-`;
+// const query = graphql`
+//   query AppExampleQuery {
+//     findChristmasListByID(id: "2") {
+//       users {
+//         mail
+//         username
+//       }
+//     }
+//   }
+// `;
 
 export default function App() {
   const classes = useStyles();
