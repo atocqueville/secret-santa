@@ -1,17 +1,25 @@
 import React from 'react';
+import { Router } from '@reach/router';
 import graphql from 'babel-plugin-relay/macro';
-import {fetchQuery} from 'relay-runtime';
-import environment from './helpers/relay';
-import { Container } from '@material-ui/core';
+// import {fetchQuery} from 'relay-runtime';
+// import environment from './helpers/relay';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from './scenes/navbar';
-import Stepper from './scenes/stepper';
-import StepRoutes from './scenes/routes';
-import StepButtons from './scenes/buttons';
+import Drawer from './scenes/drawer';
+import CreatePage from './scenes/create'
 
-export default function App() {
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex'
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1
+  }
+}));
 
-  const query = graphql`
+const query = graphql`
   query AppExampleQuery {
     findChristmasListByID(id: "2") {
       users {
@@ -22,21 +30,28 @@ export default function App() {
   }
 `;
 
-const handleClick = () => {
-  fetchQuery(environment, query)
-  .then(data => {
-    console.log(data)
-  }).catch(error => {
-    console.log(error)
-  });
-}
+export default function App() {
+  const classes = useStyles();
+
+  // const handleClick = () => {
+  //   fetchQuery(environment, query)
+  //   .then(data => {
+  //     console.log(data)
+  //   }).catch(error => {
+  //     console.log(error)
+  //   });
+  // }
 
   return (
-    <Container maxWidth={false} style={{ padding: 0 }}>
+    <div className={classes.root}>
       <Navbar />
-      <Stepper />
-      <StepRoutes />
-      <StepButtons />
-    </Container>
+      <Drawer />
+      <div className={classes.content}>
+        <div className={classes.toolbar} />
+        <Router>
+          <CreatePage path='/' />
+        </Router>
+      </div>
+    </div>
   );
 }

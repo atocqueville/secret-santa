@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from "@reach/router";
 import { Grid, Typography, Button } from '@material-ui/core';
-import { updateStepper } from '../../redux/app/ducks';
+import { updateStepper } from '../../../redux/app/ducks';
 
 function StepButtons({ stepper, updateStepper }) {
   return (
@@ -12,8 +11,6 @@ function StepButtons({ stepper, updateStepper }) {
           <div>
             <Typography>All steps completed</Typography>
             <Button
-              component={Link}
-              to='/'
               onClick={() => updateStepper(0)}
             >
               Reset
@@ -22,16 +19,12 @@ function StepButtons({ stepper, updateStepper }) {
         ) : (
           <div>
             <Button
-              component={Link}
-              to={stepper === 1 ? '/' : '/second'}
               disabled={stepper === 0}
               onClick={() => updateStepper(stepper -= 1)}
             >
               Back
             </Button>
             <Button
-              component={Link}
-              to={stepper === 0 ? '/second' : '/third'}
               variant="contained"
               color="primary"
               onClick={() => updateStepper(stepper += 1)}

@@ -1,7 +1,9 @@
-const UPDATE_STEPPER   = 'UPDATE_STEPPER';
+const UPDATE_STEPPER = 'UPDATE_STEPPER';
+const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
 
 const initialState = {
-  stepper: 0
+  stepper: 0,
+  drawerOpen: false
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -12,6 +14,12 @@ export default function reducer(state = initialState, action = {}) {
         stepper: action.value
       };
 
+    case TOGGLE_DRAWER:
+        return {
+          ...state,
+          drawerOpen: !state.drawerOpen
+        };
+
     default:
       return state;
   }
@@ -19,4 +27,8 @@ export default function reducer(state = initialState, action = {}) {
 
 export function updateStepper(value) {
   return { type: UPDATE_STEPPER, value };
+}
+
+export function toggleDrawer() {
+  return { type: TOGGLE_DRAWER };
 }
