@@ -55,7 +55,7 @@ function DrawerCustom({ drawerOpen, toggleDrawer, container }) {
             variant="temporary"
             anchor="left"
             open={drawerOpen}
-            onClose={toggleDrawer}
+            onClick={toggleDrawer}
             classes={{
               paper: classes.drawerPaper,
             }}
