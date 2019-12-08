@@ -7,10 +7,10 @@ export default function PersonFields({ id }) {
   return (
     <Grid container spacing={6}>
       <Grid item xs={6}>
-        <TextField label="Name" name={`name${id}`} required />
+        <TextField label="Name" name={`${id}.name`} />
       </Grid>
       <Grid item xs={6}>
-        <TextField label="E-mail" name={`mail${id}`} required />
+        <TextField label="E-mail" name={`${id}.mail`} />
       </Grid>
     </Grid>
   );

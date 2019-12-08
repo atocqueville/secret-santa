@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Button, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Form } from 'react-final-form';
+import arrayMutators from 'final-form-arrays'
+import { FieldArray } from 'react-final-form-arrays'
 
 import PersonFields from './PersonFields';
 
 import * as actions from '../../../../redux/app/ducks';
 
-function FormCreation({ form, participants, updateStepper, submitCreateForm, addParticipant, removeParticipant }) {
-  const [disableRemove, setDisable] = useState(true)
+const initialValues = {
+  participants: [
+    { name: "", mail: "" },
+    { name: "", mail: "" },
+    { name: "", mail: "" },
+  ]
+};
 
-  useEffect(() => {
-    setDisable(participants <= 3)
-  }, [participants]);
+function FormCreation({ form, updateStepper, submitCreateForm }) {
 
   function onSubmit(values) {
     console.log(values);
@@ -23,11 +28,22 @@ function FormCreation({ form, participants, updateStepper, submitCreateForm, add
   }
 
   function validate(values) {
-    console.log(values)
-    if (!values.mail3) {
-      return { mail3: 'Name is required' };
+    const { participants } = values;
+    let errors = { participants: [] };
+    for (let index in participants) {
+      if (!participants[index].name) {
+        if (!errors.participants[index]) errors.participants[index] = {}
+        errors.participants[index].name = 'Il faut un nom';
+      }
+      if (!participants[index].mail) {
+        if (!errors.participants[index]) errors.participants[index] = {}
+        errors.participants[index].mail = 'Il faut un mail';
+      } else if (!/^.+@.+\..+$/.test(participants[index].mail)) {
+        if (!errors.participants[index]) errors.participants[index] = {}
+        errors.participants[index].mail = 'E-mail non valide';
+      }
     }
-    return;
+    return errors;
   }
   
   return (
@@ -35,26 +51,41 @@ function FormCreation({ form, participants, updateStepper, submitCreateForm, add
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        initialValues={form}
-        render={({ handleSubmit, values }) => (
-          <form onSubmit={handleSubmit} noValidate>
-            {[...Array(participants)].map((e, i) => <PersonFields e={e} id={i} key={i} />)}
-            <pre>{JSON.stringify(values)}</pre>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              Next
-            </Button>
-            <Fab color="primary" aria-label="add" onClick={addParticipant}>
-              <AddIcon />
-            </Fab>
-            <Fab disabled={disableRemove} color="primary" aria-label="add" onClick={removeParticipant}>
-              <RemoveIcon />
-            </Fab>
-          </form>
-        )}
+        initialValues={form || initialValues}
+        mutators={{ ...arrayMutators }}
+        render={({
+          handleSubmit,
+          form: {
+            mutators: { push, pop }
+          },
+          values
+        }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <FieldArray name="participants">
+                {({ fields }) => fields.map(name => <PersonFields id={name} key={name} />)}
+              </FieldArray>
+              <Fab color="primary" aria-label="add" onClick={() => push('participants', { name: "", mail: "" })}>
+                <AddIcon />
+              </Fab>
+              <Fab
+                disabled={values.participants.length <= 3}
+                color="primary"
+                aria-label="remove"
+                onClick={() => pop('participants')}
+              >
+                <RemoveIcon />
+              </Fab>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                Next
+              </Button>
+            </form>
+          )
+        }}
       />
     </Grid>
   );
