@@ -8,7 +8,7 @@ import arrayMutators from 'final-form-arrays'
 import { FieldArray } from 'react-final-form-arrays'
 
 import PersonFields from './PersonFields';
-
+import validate from './validator';
 import * as actions from '../../../../redux/app/ducks';
 
 const initialValues = {
@@ -25,25 +25,6 @@ function FormCreation({ form, updateStepper, submitCreateForm }) {
     console.log(values);
     submitCreateForm(values);
     updateStepper(1);
-  }
-
-  function validate(values) {
-    const { participants } = values;
-    let errors = { participants: [] };
-    for (let index in participants) {
-      if (!participants[index].name) {
-        if (!errors.participants[index]) errors.participants[index] = {}
-        errors.participants[index].name = 'Il faut un nom';
-      }
-      if (!participants[index].mail) {
-        if (!errors.participants[index]) errors.participants[index] = {}
-        errors.participants[index].mail = 'Il faut un mail';
-      } else if (!/^.+@.+\..+$/.test(participants[index].mail)) {
-        if (!errors.participants[index]) errors.participants[index] = {}
-        errors.participants[index].mail = 'E-mail non valide';
-      }
-    }
-    return errors;
   }
   
   return (
@@ -92,11 +73,7 @@ function FormCreation({ form, updateStepper, submitCreateForm }) {
 }
 
 const mapStateToProps = (state) => ({
-  form: state.app.form,
-  participants: state.app.participants
+  form: state.app.form
 })
 
-export default connect(
-  mapStateToProps,
-  actions
-)(FormCreation)
+export default connect(mapStateToProps, actions)(FormCreation)
