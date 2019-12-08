@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import { Form } from 'react-final-form';
 
-import TextField from '../../../../components/TextField';
-import { updateStepper } from '../../../../redux/app/ducks';
+import PersonFields from './PersonFields';
 
-function FormCreation({ stepper, updateStepper }) {
-  
+import * as actions from '../../../../redux/app/ducks';
+
+function FormCreation({ form, participants, updateStepper, submitCreateForm, addParticipant, removeParticipant }) {
+  const [disableRemove, setDisable] = useState(true)
+
+  useEffect(() => {
+    setDisable(participants <= 3)
+  }, [participants]);
+
   function onSubmit(values) {
-    console.log(values)
-    updateStepper(1)
+    console.log(values);
+    submitCreateForm(values);
+    updateStepper(1);
   }
 
   function validate(values) {
     console.log(values)
-    if (!values.name) {
-      return { name: 'Saying hello is nice.' };
+    if (!values.mail3) {
+      return { mail3: 'Name is required' };
     }
     return;
   }
-
+  
   return (
-    <Grid>
+    <Grid style={{ padding: '0 30px' }}>
       <Form
         onSubmit={onSubmit}
         validate={validate}
+        initialValues={form}
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit} noValidate>
-            <TextField label="Hello world" name="name" required bite='la' />
-            <TextField label="Hello world 2" name="mail" required />
+            {[...Array(participants)].map((e, i) => <PersonFields e={e} id={i} key={i} />)}
             <pre>{JSON.stringify(values)}</pre>
             <Button
               variant="contained"
@@ -38,6 +47,12 @@ function FormCreation({ stepper, updateStepper }) {
             >
               Next
             </Button>
+            <Fab color="primary" aria-label="add" onClick={addParticipant}>
+              <AddIcon />
+            </Fab>
+            <Fab disabled={disableRemove} color="primary" aria-label="add" onClick={removeParticipant}>
+              <RemoveIcon />
+            </Fab>
           </form>
         )}
       />
@@ -46,12 +61,11 @@ function FormCreation({ stepper, updateStepper }) {
 }
 
 const mapStateToProps = (state) => ({
-  stepper: state.app.stepper
+  form: state.app.form,
+  participants: state.app.participants
 })
-
-const mapDispatchToProps = { updateStepper }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  actions
 )(FormCreation)
