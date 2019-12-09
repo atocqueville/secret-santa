@@ -15,5 +15,13 @@ export default createMuiTheme({
     },
 
     overrides: {
+      MuiSelect: {
+        outlined: {
+          minWidth: '60px'
+        },
+        iconOutlined: {
+          right: 2
+        }
+      }
     }
 });

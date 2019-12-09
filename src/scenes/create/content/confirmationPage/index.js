@@ -4,11 +4,26 @@ import { Grid, Typography, Button } from '@material-ui/core';
 
 import * as actions from '../../../../redux/app/ducks';
 
-function ConfirmationPage({ stepper, updateStepper }) {
-  
+function ParticipantsBlock({ participants }) {
+  const list = participants.map(person => person.name)
+  return(
+    <Grid container>
+      <Typography>
+        Les participants sont
+        {list.map((item, index) => {
+          if (index === participants.length - 1) return ` et ${item}.`
+          return ` ${item},`
+        })}
+      </Typography>
+    </Grid>
+  )
+}
+
+function ConfirmationPage({ form, restrictions, updateStepper }) {
   return (
     <Grid>
-      <Typography>CONFIRMATION PAGE</Typography>
+      <ParticipantsBlock participants={form.participants} />
+      <pre>{JSON.stringify(restrictions)}</pre>
       <Button
           variant="contained"
           color="primary"
@@ -21,7 +36,8 @@ function ConfirmationPage({ stepper, updateStepper }) {
 }
 
 const mapStateToProps = (state) => ({
-  stepper: state.app.stepper
+  form: state.app.form,
+  restrictions: state.app.restrictions,
 })
 
 export default connect(mapStateToProps, actions)(ConfirmationPage)

@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 
 import * as actions from '../../../../redux/app/ducks';
 
+import validate from './validator';
 import FormContent from './FormContent';
 
 const buildInitialValues = (participants) => {
@@ -18,15 +19,11 @@ const buildNameList = (participants) => {
   return participants.flatMap(item => item.name)
 }
 
-function RestrictionForm({ form: { participants }, updateStepper }) {
+function RestrictionForm({ form: { participants }, restrictions, updateStepper, submitRestrictionsForm }) {
 
   function onSubmit(values) {
-    console.log('submit', values)
-    // updateStepper(2);
-  }
-
-  function validate(values) {
-    console.log('validate', values)
+    submitRestrictionsForm(values);
+    updateStepper(2);
   }
 
   return (
@@ -34,7 +31,7 @@ function RestrictionForm({ form: { participants }, updateStepper }) {
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        initialValues={buildInitialValues(participants)}
+        initialValues={restrictions || buildInitialValues(participants)}
         mutators={{ ...arrayMutators }}
         render={({ handleSubmit }) =>
           <form onSubmit={handleSubmit}>
@@ -51,7 +48,8 @@ function RestrictionForm({ form: { participants }, updateStepper }) {
 }
 
 const mapStateToProps = (state) => ({
-  form: state.app.form
+  form: state.app.form,
+  restrictions: state.app.restrictions,
 })
 
 export default connect(mapStateToProps, actions)(RestrictionForm)

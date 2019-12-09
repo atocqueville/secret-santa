@@ -37,7 +37,7 @@ function Navbar({ toggleDrawer }) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          Secret Santa Maker
+          Secret Santa Creator
         </Typography>
       </Toolbar>
     </AppBar>

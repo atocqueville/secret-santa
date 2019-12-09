@@ -18,7 +18,6 @@ export default function BottomActions({ updateStepper }) {
           variant="contained"
           color="primary"
           type='submit'
-          onClick={() => updateStepper(2)}
         >
           Next
         </Button>

@@ -7,9 +7,10 @@ function SelectWrapper(props) {
 		input: { name, checked, onChange, ...restInput },
 		meta,
 		...rest
-  } = props;
-  
+	} = props;
+
   return (<MuiSelect
+		variant='outlined'
     name={name}
     onChange={onChange}
     inputProps={restInput}
@@ -23,7 +24,6 @@ function SelectWrapper(props) {
       </div>
     )}
   />)
-  
 }
 
 export default function SelectField(props) {
