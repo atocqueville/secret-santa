@@ -6,7 +6,7 @@ const SUBMIT_RESTRICTIONS_FORM = 'SUBMIT_RESTRICTIONS_FORM';
 export const DRAWER_WIDTH = 240;
 
 const initialState = {
-  stepper: 2,
+  stepper: 1,
   drawerOpen: false,
   form: {
     participants: [
@@ -17,7 +17,7 @@ const initialState = {
   },
   restrictions: {
     restrictions: [
-      { forbidden: ['Marine, Alice'] },
+      { forbidden: ['Marine', 'Alice'] },
       { forbidden: ['Alice'] },
       { forbidden: ['Alex'] },
     ]

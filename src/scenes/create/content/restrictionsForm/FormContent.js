@@ -17,7 +17,7 @@ export default function FormContent({ name, list, updateStepper }) {
               <Grid
                 container
                 direction='row'
-                style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'center', alignItems: 'center' }}
+                style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'start', alignItems: 'center' }}
               >
                 <Grid item style={{ paddingRight: '10px' }}>
                   <Typography>{personName} ne doit pas offrir à :</Typography>

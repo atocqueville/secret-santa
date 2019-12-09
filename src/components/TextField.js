@@ -15,7 +15,6 @@ function TextFieldWrapper(props) {
   
 	return (
 		<MuiTextField
-			fullWidth={true}
       helperText={showError ? meta.error : undefined}
       FormHelperTextProps={{style: {position: 'absolute', bottom: '-17px'}}}
 			error={showError}
