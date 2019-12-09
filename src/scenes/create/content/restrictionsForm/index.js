@@ -1,27 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-final-form';
-import { Grid, MenuItem } from '@material-ui/core';
+import arrayMutators from 'final-form-arrays'
+import { Grid } from '@material-ui/core';
 
 import * as actions from '../../../../redux/app/ducks';
-import BottomActions from './BottomActions';
-import SelectField from '../../../../components/SelectField';
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+import FormContent from './FormContent';
 
-function RestrictionForm({ form, updateStepper }) {
-  console.log('form init', form)
+const buildInitialValues = (participants) => {
+  const initialValues = { restrictions: [] }
+  participants.forEach(item => initialValues.restrictions.push({ forbidden: [] }))
+  return initialValues;
+}
+
+const buildNameList = (participants) => {
+  return participants.flatMap(item => item.name)
+}
+
+function RestrictionForm({ form: { participants }, updateStepper }) {
 
   function onSubmit(values) {
     console.log('submit', values)
@@ -37,23 +34,18 @@ function RestrictionForm({ form, updateStepper }) {
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        initialValues={{ restrictions: [] }}
-        render={({ handleSubmit }) => {
-          return (
-            <form onSubmit={handleSubmit}>
-              <SelectField name='restrictions'>
-                {names.map(name => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </SelectField>
-            </form>
-          )
-        }}
+        initialValues={buildInitialValues(participants)}
+        mutators={{ ...arrayMutators }}
+        render={({ handleSubmit }) =>
+          <form onSubmit={handleSubmit}>
+            <FormContent
+              name="restrictions"
+              list={buildNameList(participants)}
+              updateStepper={updateStepper}
+            />
+          </form>
+        }
       />
-
-      <BottomActions updateStepper={updateStepper} />
     </Grid>
   );
 }

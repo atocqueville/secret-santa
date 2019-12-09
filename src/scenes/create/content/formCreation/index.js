@@ -34,24 +34,20 @@ function FormCreation({ form, updateStepper, submitCreateForm }) {
         mutators={{ ...arrayMutators }}
         render={({
           handleSubmit,
-          form: {
-            mutators: { push, pop }
-          },
+          form: { mutators: { push, pop } },
           values
-        }) => {
-          return (
-            <form onSubmit={handleSubmit}>
-              <FieldArray name="participants">
-                {({ fields }) => fields.map(name => <PersonFields id={name} key={name} />)}
-              </FieldArray>
-              <BottomActions
-                push={push}
-                pop={pop}
-                removeDisabled={values.participants.length <= 3}
-              />
-            </form>
-          )
-        }}
+        }) =>
+          <form onSubmit={handleSubmit}>
+            <FieldArray name="participants">
+              {({ fields }) => fields.map(name => <PersonFields id={name} key={name} />)}
+            </FieldArray>
+            <BottomActions
+              push={push}
+              pop={pop}
+              removeDisabled={values.participants.length <= 3}
+            />
+          </form>
+        }
       />
     </Grid>
   );

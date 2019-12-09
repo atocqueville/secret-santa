@@ -17,6 +17,7 @@ export default function BottomActions({ updateStepper }) {
         <Button
           variant="contained"
           color="primary"
+          type='submit'
           onClick={() => updateStepper(2)}
         >
           Next
