@@ -7,7 +7,13 @@ export const DRAWER_WIDTH = 240;
 const initialState = {
   stepper: 0,
   drawerOpen: false,
-  form: undefined,
+  form: {
+    participants: [
+      { name: 'Alex', mail: 'st@gj.com' },
+      { name: 'Marine', mail: 'sdt@gj.pom' },
+      { name: 'Alice', mail: 'dt@gj.mom' },
+    ]
+  },
 };
 
 export default function reducer(state = initialState, action = {}) {

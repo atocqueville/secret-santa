@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button, Fab } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { Grid } from '@material-ui/core';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 import { FieldArray } from 'react-final-form-arrays'
@@ -10,6 +8,7 @@ import { FieldArray } from 'react-final-form-arrays'
 import PersonFields from './PersonFields';
 import validate from './validator';
 import * as actions from '../../../../redux/app/ducks';
+import BottomActions from './BottomActions';
 
 const initialValues = {
   participants: [
@@ -46,24 +45,11 @@ function FormCreation({ form, updateStepper, submitCreateForm }) {
               <FieldArray name="participants">
                 {({ fields }) => fields.map(name => <PersonFields id={name} key={name} />)}
               </FieldArray>
-              <Fab color="primary" aria-label="add" onClick={() => push('participants', { name: "", mail: "" })}>
-                <AddIcon />
-              </Fab>
-              <Fab
-                disabled={values.participants.length <= 3}
-                color="primary"
-                aria-label="remove"
-                onClick={() => pop('participants')}
-              >
-                <RemoveIcon />
-              </Fab>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                Next
-              </Button>
+              <BottomActions
+                push={push}
+                pop={pop}
+                removeDisabled={values.participants.length <= 3}
+              />
             </form>
           )
         }}

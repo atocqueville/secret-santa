@@ -10,13 +10,14 @@ function TextFieldWrapper(props) {
 		...rest
 	} = props;
 
-	const { helperText, ...lessrest } = rest;
-	const showError = ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) && meta.touched;
-
+  const { ...lessrest } = rest;
+  const showError = meta.error && meta.touched;
+  
 	return (
 		<MuiTextField
 			fullWidth={true}
-			helperText={helperText !== undefined ? helperText : showError ? meta.error || meta.submitError : undefined}
+      helperText={showError ? meta.error : undefined}
+      FormHelperTextProps={{style: {position: 'absolute', bottom: '-17px'}}}
 			error={showError}
 			onChange={onChange}
 			name={name}
