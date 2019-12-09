@@ -21,7 +21,6 @@ const initialValues = {
 function FormCreation({ form, updateStepper, submitCreateForm }) {
 
   function onSubmit(values) {
-    console.log(values);
     submitCreateForm(values);
     updateStepper(1);
   }

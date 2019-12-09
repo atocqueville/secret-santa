@@ -5,7 +5,7 @@ const SUBMIT_CREATE_FORM = 'SUBMIT_CREATE_FORM';
 export const DRAWER_WIDTH = 240;
 
 const initialState = {
-  stepper: 0,
+  stepper: 1,
   drawerOpen: false,
   form: {
     participants: [
