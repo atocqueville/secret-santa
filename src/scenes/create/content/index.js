@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
-import FormCreation from './formCreation'
-import RestrictionsForm from './restrictionsForm'
-import ConfirmationPage from './confirmationPage'
+import { Grid } from '@material-ui/core';
+import FormCreation from './formCreation';
+import RestrictionsForm from './restrictionsForm';
+import ConfirmationPage from './confirmationPage';
 
 function StepContent({ stepper }) {
 
@@ -25,7 +25,9 @@ function StepContent({ stepper }) {
 
   const [Component, setComponent] = useState(FormCreation)
   return (
-    <Component />
+    <Grid style={{ padding: '0 30px' }}>
+      <Component />
+    </Grid>
   );
 }
 

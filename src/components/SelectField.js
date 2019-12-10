@@ -1,13 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Select as MuiSelect, FormControl, Chip } from '@material-ui/core';
 import { Field } from 'react-final-form';
 
 function SelectWrapper(props) {
 	const {
 		input: { name, checked, onChange, ...restInput },
-		meta,
+    meta,
+    firstForm: { participants },
 		...rest
-	} = props;
+  } = props;
 
   return (<MuiSelect
 		variant='outlined'
@@ -18,17 +20,19 @@ function SelectWrapper(props) {
     multiple
     renderValue={selected => (
       <div>
-        {selected.map(value => (
-          <Chip key={value} label={value} />
-        ))}
+        {selected.map(value => {
+          const person = participants[value]
+          return <Chip key={person.id} label={person.name} />
+        })}
       </div>
     )}
   />)
 }
 
-export default function SelectField(props) {
+function SelectField(props) {
 	const {
-		name,
+    name,
+    firstForm,
 		children,
 		required,
 		fieldProps,
@@ -38,7 +42,7 @@ export default function SelectField(props) {
 	return (
 		<FormControl required={required} margin="normal" fullWidth={true} {...formControlProps}>
 			<Field
-				render={fieldRenderProps => <SelectWrapper {...fieldRenderProps} />}
+				render={fieldRenderProps => <SelectWrapper firstForm={firstForm} {...fieldRenderProps} />}
 				name={name}
 				{...fieldProps}
 			>
@@ -47,3 +51,9 @@ export default function SelectField(props) {
 		</FormControl>
 	);
 }
+
+const mapStateToProps = (state) => ({
+  firstForm: state.app.firstForm,
+})
+
+export default connect(mapStateToProps)(SelectField)

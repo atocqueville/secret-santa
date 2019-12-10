@@ -6,20 +6,22 @@ const SUBMIT_RESTRICTIONS_FORM = 'SUBMIT_RESTRICTIONS_FORM';
 export const DRAWER_WIDTH = 240;
 
 const initialState = {
-  stepper: 1,
+  stepper: 2,
   drawerOpen: false,
-  form: {
+  firstForm: {
     participants: [
-      { name: 'Alex', mail: 'st@gj.com' },
-      { name: 'Marine', mail: 'sdt@gj.pom' },
-      { name: 'Alice', mail: 'dt@gj.mom' },
+      { name: 'Alex', mail: 'st@gj.com', id: 0 },
+      { name: 'Marine', mail: 'sdt@gj.pom', id: 1 },
+      { name: 'Alice', mail: 'dt@gj.mom', id: 2 },
+      { name: 'Alexis', mail: 'dehi@j.jdo', id: 3 },
     ]
   },
-  restrictions: {
+  secondForm: {
     restrictions: [
-      { forbidden: ['Marine', 'Alice'] },
-      { forbidden: ['Alice'] },
-      { forbidden: ['Alex'] },
+      { forbidden: [1, 2] },
+      { forbidden: [2] },
+      { forbidden: [0] },
+      { forbidden: [0, 1, 2] },
     ]
   },
 };
@@ -39,15 +41,17 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case SUBMIT_CREATE_FORM:
+      const { firstForm } = action;
+      firstForm.participants.forEach((item, index) => item['id'] = index)
       return {
         ...state,
-        form: action.form
+        firstForm
       };
 
     case SUBMIT_RESTRICTIONS_FORM:
       return {
         ...state,
-        restrictions: action.restrictions
+        secondForm: action.restrictions
       };
 
     default:
@@ -63,8 +67,8 @@ export function toggleDrawer() {
   return { type: TOGGLE_DRAWER };
 }
 
-export function submitCreateForm(form) {
-  return { type: SUBMIT_CREATE_FORM, form };
+export function submitCreateForm(firstForm) {
+  return { type: SUBMIT_CREATE_FORM, firstForm };
 }
 
 export function submitRestrictionsForm(restrictions) {

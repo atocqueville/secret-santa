@@ -20,12 +20,11 @@ export default function FormContent({ name, list, updateStepper }) {
                 style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'start', alignItems: 'center' }}
               >
                 <Grid item style={{ paddingRight: '10px' }}>
-                  <Typography>{personName} ne doit pas offrir à :</Typography>
+                  <Typography>{personName[0].name} ne doit pas offrir à :</Typography>
                 </Grid>
                 <Grid item>
                   <PersonSelect
                     id={name}
-                    name={personName}
                     list={newList}
                   />
                 </Grid>
