@@ -2,15 +2,31 @@ type ChristmasList {
   participants: [Participant!]!
 }
 
+input ParticipantInput {
+  name: String!
+  mail: String!
+  forbidden: [Int]!
+  secretSanta: SecretSantaInput!
+}
+
 type Participant {
   name: String!
   mail: String!
   forbidden: [Int]!
   secretSanta: SecretSanta!
-  christmasList: [ChristmasList!]
+  christmasList: ChristmasList!
+}
+
+type Mutation {
+  createChristmasList(data: [ParticipantInput!]!): ChristmasList! @resolver
 }
 
 type SecretSanta {
+  name: String!
+  mail: String!
+}
+
+input SecretSantaInput {
   name: String!
   mail: String!
 }

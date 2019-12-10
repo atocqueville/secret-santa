@@ -1,7 +1,7 @@
-import { fetchQuery } from 'relay-runtime';
+import { commitMutation } from 'react-relay';
 import { environment } from '../../helpers/relay';
-import { put, takeLatest, call, select } from 'redux-saga/effects';
-import * as actions from './ducks';
+import { put, takeLatest, select } from 'redux-saga/effects';
+// import * as actions from './ducks';
 import { MERGE_FORMS } from './ducks';
 
 import { createChristmasList } from './relay';
@@ -20,9 +20,7 @@ function* computeSanta() {
     });
     const formWithSanta = yield responseFunc.json();
     console.log(formWithSanta)
-    console.log(createChristmasList)
-    // const responseFauna = yield call(fetchQuery, environment, createChristmasList, { data: formWithSanta });
-    const res2 = fetchQuery(environment, createChristmasList, { data: formWithSanta });
+    const res2 = commitMutation(environment, { mutation: createChristmasList, variables: { data: formWithSanta }});
     console.log(res2)
   } catch (e) { console.log("error", e) }
 }

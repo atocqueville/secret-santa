@@ -22,7 +22,7 @@ scalar Date
 scalar Long
 
 type Mutation {
-  createChristmasList(data: ChristmasListInput!): ChristmasList!
+  createChristmasList(data: [ParticipantInput!]!): ChristmasList!
   deleteChristmasList(id: ID!): ChristmasList
   updateSecretSanta(
     id: ID!
@@ -46,18 +46,22 @@ type Participant {
   name: String!
   _id: ID!
   secretSanta: SecretSanta!
-  christmasList: [ChristmasList!]
+  christmasList: ChristmasList!
   mail: String!
   forbidden: [Int]!
   _ts: Long!
+}
+
+input ParticipantChristmasListRelation {
+  create: ChristmasListInput
+  connect: ID
 }
 
 input ParticipantInput {
   name: String!
   mail: String!
   forbidden: [Int]!
-  secretSanta: ParticipantSecretSantaRelation
-  christmasList: [ID!]
+  secretSanta: SecretSantaInput!
 }
 
 input ParticipantSecretSantaRelation {
@@ -84,3 +88,4 @@ input SecretSantaInput {
 }
 
 scalar Time
+

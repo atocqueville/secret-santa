@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b81d1311c07facf581acfc081d314dec
+ * @relayHash d6176e384229f71c34cc118fe7134586
  */
 
 /* eslint-disable */
@@ -9,11 +9,18 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ChristmasListInput = {|
-  participants: $ReadOnlyArray<string>
+export type ParticipantInput = {|
+  name: string,
+  mail: string,
+  forbidden: $ReadOnlyArray<?number>,
+  secretSanta: SecretSantaInput,
+|};
+export type SecretSantaInput = {|
+  name: string,
+  mail: string,
 |};
 export type relayCreateListMutationVariables = {|
-  data: ChristmasListInput
+  data: $ReadOnlyArray<ParticipantInput>
 |};
 export type relayCreateListMutationResponse = {|
   +createChristmasList: {|
@@ -34,7 +41,7 @@ export type relayCreateListMutation = {|
 
 /*
 mutation relayCreateListMutation(
-  $data: ChristmasListInput!
+  $data: [ParticipantInput!]!
 ) {
   createChristmasList(data: $data) {
     participants {
@@ -52,7 +59,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "data",
-    "type": "ChristmasListInput!",
+    "type": "[ParticipantInput!]!",
     "defaultValue": null
   }
 ],
@@ -126,11 +133,11 @@ return {
     "operationKind": "mutation",
     "name": "relayCreateListMutation",
     "id": null,
-    "text": "mutation relayCreateListMutation(\n  $data: ChristmasListInput!\n) {\n  createChristmasList(data: $data) {\n    participants {\n      name\n      secretSanta {\n        name\n      }\n    }\n  }\n}\n",
+    "text": "mutation relayCreateListMutation(\n  $data: [ParticipantInput!]!\n) {\n  createChristmasList(data: $data) {\n    participants {\n      name\n      secretSanta {\n        name\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9f2f2939da467fcc0069e617bea191f9';
+(node/*: any*/).hash = 'eb25957158c7945191ddb0dcb0d8ded5';
 module.exports = node;
