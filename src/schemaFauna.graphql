@@ -10,11 +10,11 @@ directive @unique(index: String) on FIELD_DEFINITION
 type ChristmasList {
   _id: ID!
   _ts: Long!
-  users: [User!]!
+  participants: [Participant!]!
 }
 
 input ChristmasListInput {
-  users: [ID!]!
+  participants: [ID!]!
 }
 
 scalar Date
@@ -22,40 +22,65 @@ scalar Date
 scalar Long
 
 type Mutation {
-  updateUser(
-    id: ID!
-    data: UserInput!
-  ): User
   createChristmasList(data: ChristmasListInput!): ChristmasList!
-  createUser(data: UserInput!): User!
   deleteChristmasList(id: ID!): ChristmasList
-  deleteUser(id: ID!): User
+  updateSecretSanta(
+    id: ID!
+    data: SecretSantaInput!
+  ): SecretSanta
+  createSecretSanta(data: SecretSantaInput!): SecretSanta!
+  deleteSecretSanta(id: ID!): SecretSanta
+  deleteParticipant(id: ID!): Participant
   updateChristmasList(
     id: ID!
     data: ChristmasListInput!
   ): ChristmasList
+  createParticipant(data: ParticipantInput!): Participant!
+  updateParticipant(
+    id: ID!
+    data: ParticipantInput!
+  ): Participant
 }
 
-type Query {
-  findUserByID(id: ID!): User
-  findChristmasListByID(id: ID!): ChristmasList
-}
-
-scalar Time
-
-type User {
-  username: String!
+type Participant {
+  name: String!
   _id: ID!
+  secretSanta: SecretSanta!
+  christmasList: [ChristmasList!]
   mail: String!
-  pass: String!
-  list: [ChristmasList!]
+  forbidden: [Int]!
   _ts: Long!
 }
 
-input UserInput {
-  username: String!
+input ParticipantInput {
+  name: String!
   mail: String!
-  pass: String!
-  list: [ID!]
+  forbidden: [Int]!
+  secretSanta: ParticipantSecretSantaRelation
+  christmasList: [ID!]
 }
 
+input ParticipantSecretSantaRelation {
+  create: SecretSantaInput
+  connect: ID
+}
+
+type Query {
+  findChristmasListByID(id: ID!): ChristmasList
+  findParticipantByID(id: ID!): Participant
+  findSecretSantaByID(id: ID!): SecretSanta
+}
+
+type SecretSanta {
+  _id: ID!
+  _ts: Long!
+  name: String!
+  mail: String!
+}
+
+input SecretSantaInput {
+  name: String!
+  mail: String!
+}
+
+scalar Time
