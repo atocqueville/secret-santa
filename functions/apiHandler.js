@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-export async function handler(event, context) {
+export async function handler(event) {
   const b64encodedSecret = Buffer.from(
     process.env.FAUNA_DB_SERVER + ":"
   ).toString("base64")

@@ -1,12 +1,12 @@
 import { all } from 'redux-saga/effects';
 
-import { databaseWatcher } from './database/saga';
+import { appWatcher } from './app/sagas';
 
 /**
  * Combine all sagas
  */
 export default function* rootSaga() {
     yield all([
-        databaseWatcher()
+        appWatcher()
     ]);
 }

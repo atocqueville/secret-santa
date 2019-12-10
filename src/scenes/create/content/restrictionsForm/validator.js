@@ -1,18 +1,12 @@
 export default function(values) {
   const { restrictions } = values;
+  const MAX_FORBIDDEN = restrictions.length - 2; // HIMSELF + 1 open
   let errors = { restrictions: [] };
-  /* for (let index in participants) {
-    if (!participants[index].name) {
-      if (!errors.participants[index]) errors.participants[index] = {}
-      errors.participants[index].name = 'Il faut un nom';
+  restrictions.forEach((person, index) => {
+    if (person.forbidden.length > MAX_FORBIDDEN) {
+      errors.restrictions[index] = {};
+      errors.restrictions[index].forbidden = "Trop d'interdictions";
     }
-    if (!participants[index].mail) {
-      if (!errors.participants[index]) errors.participants[index] = {}
-      errors.participants[index].mail = 'Il faut un mail';
-    } else if (!/^.+@.+\..+$/.test(participants[index].mail)) {
-      if (!errors.participants[index]) errors.participants[index] = {}
-      errors.participants[index].mail = 'E-mail non valide';
-    }
-  } */
+  })
   return errors;
 }

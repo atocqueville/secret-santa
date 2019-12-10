@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, MenuItem } from '@material-ui/core';
 import { FieldArray } from 'react-final-form-arrays'
 
-import PersonSelect from './PersonSelect';
+import SelectField from '../../../../components/SelectField';
 import BottomActions from './BottomActions';
 
 export default function FormContent({ name, list, updateStepper }) {
@@ -23,10 +23,13 @@ export default function FormContent({ name, list, updateStepper }) {
                   <Typography>{personName[0].name} ne doit pas offrir à :</Typography>
                 </Grid>
                 <Grid item>
-                  <PersonSelect
-                    id={name}
-                    list={newList}
-                  />
+                  <SelectField name={`${name}.forbidden`} list={list}>
+                    {newList.map(person => (
+                      <MenuItem key={person.name} value={person.id}>
+                        {person.name}
+                      </MenuItem>
+                    ))}
+                  </SelectField>
                 </Grid>
               </Grid>
             </Grid>

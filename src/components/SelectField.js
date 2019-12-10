@@ -1,60 +1,66 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Select as MuiSelect, FormControl, Chip } from '@material-ui/core';
+import { Select as MuiSelect, Chip, FormControl, FormHelperText } from '@material-ui/core';
+import React, { useState } from 'react';
+
 import { Field } from 'react-final-form';
 
 function SelectWrapper(props) {
 	const {
 		input: { name, checked, onChange, ...restInput },
     meta,
-    firstForm: { participants },
+    list,
 		...rest
   } = props;
-
-  return (<MuiSelect
-    variant='outlined'
-    color='secondary'
-    name={name}
-    onChange={onChange}
-    inputProps={restInput}
-    {...rest}
-    multiple
-    renderValue={selected => (
-      <div>
-        {selected.map(value => {
-          const person = participants[value]
-          return <Chip key={person.id} label={person.name} />
-        })}
-      </div>
-    )}
-  />)
+  
+  return (
+    <MuiSelect
+      variant='outlined'
+      color='secondary'
+      multiple
+      name={name}
+      onChange={onChange}
+      inputProps={restInput}
+      {...rest}
+      renderValue={selected => (
+        <div>
+          {selected.map(value => {
+            const person = list[value]
+            return <Chip key={person.id} label={person.name} />
+          })}
+        </div>
+      )}
+    />
+  );
 }
 
-function SelectField(props) {
+export default function SelectField(props) {
 	const {
-    name,
-    firstForm,
+		name,
+    list,
 		children,
 		required,
 		fieldProps,
 		formControlProps,
-  } = props;
-  
+		formHelperTextProps,
+	} = props;
+
+	const [error, setError] = useState(null);
+
 	return (
-		<FormControl required={required} margin="normal" fullWidth={true} {...formControlProps}>
+		<FormControl required={required} error={!!error} margin="normal" fullWidth={true} {...formControlProps}>
 			<Field
-				render={fieldRenderProps => <SelectWrapper firstForm={firstForm} {...fieldRenderProps} />}
+				render={fieldRenderProps => {
+					const { meta } = fieldRenderProps;
+					const showError = ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) && meta.touched;
+					setError(showError ? fieldRenderProps.meta.error : null);
+					return <SelectWrapper list={list} {...fieldRenderProps} />;
+				}}
 				name={name}
 				{...fieldProps}
 			>
 				{children}
 			</Field>
+			{error ? <FormHelperText style={{position: 'absolute', bottom: '-17px'}} {...formHelperTextProps}>{error}</FormHelperText> : <></>}
 		</FormControl>
 	);
 }
 
-const mapStateToProps = (state) => ({
-  firstForm: state.app.firstForm,
-})
-
-export default connect(mapStateToProps)(SelectField)
