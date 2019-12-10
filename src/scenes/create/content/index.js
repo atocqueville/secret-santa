@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import FormCreation from './formCreation';
 import RestrictionsForm from './restrictionsForm';
 import ConfirmationPage from './confirmationPage';
+import Uploading from './uploading';
 
 function StepContent({ stepper }) {
 
@@ -17,6 +18,9 @@ function StepContent({ stepper }) {
         break;
       case 2:
         setComponent(ConfirmationPage)
+        break;
+      case 3:
+        setComponent(Uploading)
         break;
       default:
         break;

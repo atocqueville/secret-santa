@@ -14,10 +14,10 @@ function ParticipantsBlock({ participants }) {
       <Typography>
         Les participants sont
         {participants.map((item, index) => {
-          if (index === participants.length - 1) return ` ${item.name}`
           if (index === participants.length - 2) return ` ${item.name} et`
+          else if (index === participants.length - 1) return ` ${item.name}.`
           return ` ${item.name},`
-        })}.
+        })}
       </Typography>
       </Grid>
     </Grid>
@@ -36,12 +36,12 @@ function RestrictionsBlock({ participants, restrictions }) {
           const forbidden = restrictions[indexP].forbidden;
           return(
             <Typography key={item.name}>
-              {item.name} ne doit pas offrir à
+              {!!forbidden.length && `${item.name} ne doit pas offrir à`} 
               {forbidden.map((id, indexF) => {
-                if (indexF === forbidden.length - 1) return ` ${list[id]}`
                 if (indexF === forbidden.length - 2) return(` ${list[id]} et`)
+                else if (indexF === forbidden.length - 1) return ` ${list[id]}.`
                 return(` ${list[id]},`)
-              })}.
+              })}
             </Typography>
           )
         })}
@@ -50,18 +50,29 @@ function RestrictionsBlock({ participants, restrictions }) {
   )
 }
 
-function ConfirmationPage({ participants, restrictions, updateStepper }) {
+function ConfirmationPage({ participants, restrictions, updateStepper, mergeForms }) {
   return (
     <Grid>
       <ParticipantsBlock participants={participants} />
       <RestrictionsBlock participants={participants} restrictions={restrictions} />
-      <Button
+      <Grid style={{ display: 'flex', justifyContent: 'start', alignItem: 'center', paddingTop: 30 }}>
+        <Button
           variant="contained"
           color="primary"
           onClick={() => updateStepper(1)}
         >
           Back
         </Button>
+      </Grid>
+      <Grid style={{ display: 'flex', justifyContent: 'center', alignItem: 'center', paddingTop: 40 }}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={mergeForms}
+        >
+          CONFIRMER
+        </Button>
+      </Grid>
     </Grid>
   );
 }

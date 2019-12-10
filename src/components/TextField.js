@@ -22,6 +22,7 @@ function TextFieldWrapper(props) {
 			name={name}
 			value={value}
 			margin="normal"
+			color='secondary'
 			type={type}
 			InputLabelProps={{ shrink: !!value }}
 			{...lessrest}

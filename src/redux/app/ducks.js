@@ -2,6 +2,7 @@ const UPDATE_STEPPER = 'UPDATE_STEPPER';
 const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
 const SUBMIT_CREATE_FORM = 'SUBMIT_CREATE_FORM';
 const SUBMIT_RESTRICTIONS_FORM = 'SUBMIT_RESTRICTIONS_FORM';
+const MERGE_FORMS = 'MERGE_FORMS';
 
 export const DRAWER_WIDTH = 240;
 
@@ -24,6 +25,7 @@ const initialState = {
       { forbidden: [0, 1, 2] },
     ]
   },
+  finalForm: null
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -45,13 +47,24 @@ export default function reducer(state = initialState, action = {}) {
       firstForm.participants.forEach((item, index) => item['id'] = index)
       return {
         ...state,
-        firstForm
+        firstForm,
+        secondForm: firstForm.participants.length === state.firstForm.participants.length ? state.secondForm : null
       };
 
     case SUBMIT_RESTRICTIONS_FORM:
       return {
         ...state,
         secondForm: action.restrictions
+      };
+
+    case MERGE_FORMS:
+      const finalForm = state.firstForm.participants.map(
+        (person, index) =>({ ...person, ...state.secondForm.restrictions[index] })
+      );
+      return {
+        ...state,
+        stepper: 3,
+        finalForm
       };
 
     default:
@@ -73,4 +86,8 @@ export function submitCreateForm(firstForm) {
 
 export function submitRestrictionsForm(restrictions) {
   return { type: SUBMIT_RESTRICTIONS_FORM, restrictions };
+}
+
+export function mergeForms() {
+  return { type: MERGE_FORMS };
 }

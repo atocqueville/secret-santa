@@ -12,7 +12,8 @@ function SelectWrapper(props) {
   } = props;
 
   return (<MuiSelect
-		variant='outlined'
+    variant='outlined'
+    color='secondary'
     name={name}
     onChange={onChange}
     inputProps={restInput}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Stepper, Step, StepLabel } from '@material-ui/core';
 
 function StepperCustom({ stepper }) {
-  const steps = ['Add people', 'Specify interdictions', 'Merry Christmas! 🎅'];
+  const steps = ['Participants', 'Interdictions', 'Confirmation', 'Merry Christmas! 🎅'];
 
   return (
     <Stepper activeStep={stepper} alternativeLabel style={{ padding: '24px' }}>
