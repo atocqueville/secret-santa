@@ -1,14 +1,18 @@
 import { graphql } from 'babel-plugin-relay/macro';
 
 export const createChristmasList = graphql`
-  mutation relayCreateListMutation($data: [ParticipantInput!]!) {
+  mutation relayCreateListMutation($data: ChristmasListInput!) {
     createChristmasList(data: $data) {
-      participants {
-        name
-        secretSanta {
-          name
-        }
-      }
+      _id
+    }
+  }
+`;
+
+export const createParticipant = graphql`
+  mutation relayCreateParticipantMutation($data: ParticipantInput!) {
+    createParticipant(data: $data) {
+      _id
+      name
     }
   }
 `;

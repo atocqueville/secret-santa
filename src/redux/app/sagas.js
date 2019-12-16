@@ -1,10 +1,13 @@
-import { commitMutation } from 'react-relay';
-import { environment } from '../../helpers/relay';
+import { commitMutation } from '../../helpers/relay';
 import { put, takeLatest, select } from 'redux-saga/effects';
 // import * as actions from './ducks';
 import { MERGE_FORMS } from './ducks';
 
-import { createChristmasList } from './relay';
+import { createChristmasList, createParticipant } from './relay';
+
+function ID () {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
 
 const getAppState = (state) => state.app;
 
@@ -19,9 +22,28 @@ function* computeSanta() {
       body: JSON.stringify(finalForm)
     });
     const formWithSanta = yield responseFunc.json();
-    console.log(formWithSanta)
-    const res2 = commitMutation(environment, { mutation: createChristmasList, variables: { data: formWithSanta }});
-    console.log(res2)
+    console.log('form final', formWithSanta)
+
+    // CREATION DE LA LISTE + RECUPERATION ID
+    const { createChristmasList: list } = yield commitMutation({ mutation: createChristmasList, variables:
+      { data: { title: "Test" + ID() } }
+    });
+
+    // AJOUT PARTICIPANTS DANS DB AVEC ID LIST
+    for (const participant of formWithSanta) {
+      console.log('part', participant)
+      const { createParticipant: res} = yield commitMutation({ mutation: createParticipant, variables:
+        { data: {
+          ...participant,
+          list: { connect: list._id },
+          secretSanta: {
+            create: participant.secretSanta
+          }
+        }}
+      });
+      console.log('relay response', res)
+    }
+
   } catch (e) { console.log("error", e) }
 }
 

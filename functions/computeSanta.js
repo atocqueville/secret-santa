@@ -9,6 +9,8 @@ export async function handler(event) {
 
   tableauNoel.forEach(person => {
     const { forbidden, secretSanta, id, ...details } = participants[person.secretSanta];
+    delete person.id
+    delete person.forbidden
     person.secretSanta = details;
   })
   

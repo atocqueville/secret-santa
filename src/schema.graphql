@@ -1,32 +1,16 @@
 type ChristmasList {
-  participants: [Participant!]!
-}
-
-input ParticipantInput {
-  name: String!
-  mail: String!
-  forbidden: [Int]!
-  secretSanta: SecretSantaInput!
+  title: String!
+  participants: [Participant] @relation
 }
 
 type Participant {
   name: String!
   mail: String!
-  forbidden: [Int]!
+  list: ChristmasList
   secretSanta: SecretSanta!
-  christmasList: ChristmasList!
-}
-
-type Mutation {
-  createChristmasList(data: [ParticipantInput!]!): ChristmasList! @resolver
 }
 
 type SecretSanta {
-  name: String!
-  mail: String!
-}
-
-input SecretSantaInput {
   name: String!
   mail: String!
 }

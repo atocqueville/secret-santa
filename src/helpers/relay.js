@@ -1,9 +1,5 @@
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-} from 'relay-runtime';
+import { Environment, Network, RecordSource, Store } from 'relay-runtime';
+import { commitMutation as commitMutationRelay } from 'react-relay';
 
 function fetchQuery(operation, variables) {
   return fetch('/.netlify/functions/apiHandler', {
@@ -14,7 +10,6 @@ function fetchQuery(operation, variables) {
     }),
   }).then(response => response.json()
   ).then(data => {
-    console.log(data)
     if (data.errors) throw data.errors;
     return data
   });
@@ -24,3 +19,13 @@ export const environment = new Environment({
   network: Network.create(fetchQuery),
   store: new Store(new RecordSource()),  
 });
+
+export function commitMutation(options) {
+  return new Promise((resolve, reject) => {
+    commitMutationRelay(environment, {
+      ...options,
+      onError: (error) => { reject(error) },
+      onCompleted: (response) => { resolve(response) }
+    });
+  });
+}

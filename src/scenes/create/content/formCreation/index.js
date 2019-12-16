@@ -9,15 +9,6 @@ import validate from './validator';
 import * as actions from '../../../../redux/app/ducks';
 import BottomActions from './BottomActions';
 
-//TODO: MOVE TO STORE
-const initialValues = {
-  participants: [
-    { name: "", mail: "" },
-    { name: "", mail: "" },
-    { name: "", mail: "" },
-  ]
-};
-
 function FormCreation({ firstForm, updateStepper, submitCreateForm }) {
 
   function onSubmit(values) {
@@ -29,7 +20,7 @@ function FormCreation({ firstForm, updateStepper, submitCreateForm }) {
     <Form
       onSubmit={onSubmit}
       validate={validate}
-      initialValues={firstForm || initialValues}
+      initialValues={firstForm}
       mutators={{ ...arrayMutators }}
       render={({
         handleSubmit,

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f6c00fc86b4cf25cf04692ce5a4b2619
+ * @relayHash dedac5869d3ca3b412a50dfef15deb9d
  */
 
 /* eslint-disable */
@@ -9,15 +9,6 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ChristmasListInput = {|
-  title: string,
-  participants?: ?ChristmasListParticipantsRelation,
-|};
-export type ChristmasListParticipantsRelation = {|
-  create?: ?$ReadOnlyArray<?ParticipantInput>,
-  connect?: ?$ReadOnlyArray<?string>,
-  disconnect?: ?$ReadOnlyArray<?string>,
-|};
 export type ParticipantInput = {|
   name: string,
   mail: string,
@@ -29,6 +20,15 @@ export type ParticipantListRelation = {|
   connect?: ?string,
   disconnect?: ?boolean,
 |};
+export type ChristmasListInput = {|
+  title: string,
+  participants?: ?ChristmasListParticipantsRelation,
+|};
+export type ChristmasListParticipantsRelation = {|
+  create?: ?$ReadOnlyArray<?ParticipantInput>,
+  connect?: ?$ReadOnlyArray<?string>,
+  disconnect?: ?$ReadOnlyArray<?string>,
+|};
 export type ParticipantSecretSantaRelation = {|
   create?: ?SecretSantaInput,
   connect?: ?string,
@@ -37,27 +37,29 @@ export type SecretSantaInput = {|
   name: string,
   mail: string,
 |};
-export type relayCreateListMutationVariables = {|
-  data: ChristmasListInput
+export type relayCreateParticipantMutationVariables = {|
+  data: ParticipantInput
 |};
-export type relayCreateListMutationResponse = {|
-  +createChristmasList: {|
-    +_id: string
+export type relayCreateParticipantMutationResponse = {|
+  +createParticipant: {|
+    +_id: string,
+    +name: string,
   |}
 |};
-export type relayCreateListMutation = {|
-  variables: relayCreateListMutationVariables,
-  response: relayCreateListMutationResponse,
+export type relayCreateParticipantMutation = {|
+  variables: relayCreateParticipantMutationVariables,
+  response: relayCreateParticipantMutationResponse,
 |};
 */
 
 
 /*
-mutation relayCreateListMutation(
-  $data: ChristmasListInput!
+mutation relayCreateParticipantMutation(
+  $data: ParticipantInput!
 ) {
-  createChristmasList(data: $data) {
+  createParticipant(data: $data) {
     _id
+    name
   }
 }
 */
@@ -67,7 +69,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "data",
-    "type": "ChristmasListInput!",
+    "type": "ParticipantInput!",
     "defaultValue": null
   }
 ],
@@ -75,7 +77,7 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "createChristmasList",
+    "name": "createParticipant",
     "storageKey": null,
     "args": [
       {
@@ -84,13 +86,20 @@ v1 = [
         "variableName": "data"
       }
     ],
-    "concreteType": "ChristmasList",
+    "concreteType": "Participant",
     "plural": false,
     "selections": [
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "_id",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "name",
         "args": null,
         "storageKey": null
       }
@@ -101,7 +110,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "relayCreateListMutation",
+    "name": "relayCreateParticipantMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -109,19 +118,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "relayCreateListMutation",
+    "name": "relayCreateParticipantMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "relayCreateListMutation",
+    "name": "relayCreateParticipantMutation",
     "id": null,
-    "text": "mutation relayCreateListMutation(\n  $data: ChristmasListInput!\n) {\n  createChristmasList(data: $data) {\n    _id\n  }\n}\n",
+    "text": "mutation relayCreateParticipantMutation(\n  $data: ParticipantInput!\n) {\n  createParticipant(data: $data) {\n    _id\n    name\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '3468ff8cd7b562962e26ff4ca15c3f9e';
+(node/*: any*/).hash = '6f4a01e02be62743e5d09e067bbb544c';
 module.exports = node;
