@@ -4,8 +4,9 @@ import { put, takeLatest, select } from 'redux-saga/effects';
 import { MERGE_FORMS } from './ducks';
 
 import { createChristmasList, createParticipant } from './relay';
+import ID from '../../helpers/generatorID';
 
-function ID () {
+function IDgen () {
   return '_' + Math.random().toString(36).substr(2, 9);
 };
 
@@ -26,7 +27,7 @@ function* computeSanta() {
 
     // CREATION DE LA LISTE + RECUPERATION ID
     const { createChristmasList: list } = yield commitMutation({ mutation: createChristmasList, variables:
-      { data: { title: "Test" + ID() } }
+      { data: { title: "Test" + IDgen(), key: ID() } }
     });
 
     // AJOUT PARTICIPANTS DANS DB AVEC ID LIST

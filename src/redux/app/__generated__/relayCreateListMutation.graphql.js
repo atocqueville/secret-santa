@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f6c00fc86b4cf25cf04692ce5a4b2619
+ * @relayHash 90a8ea246a0ea158015eba5f1f33f3c5
  */
 
 /* eslint-disable */
@@ -11,6 +11,7 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type ChristmasListInput = {|
   title: string,
+  key: string,
   participants?: ?ChristmasListParticipantsRelation,
 |};
 export type ChristmasListParticipantsRelation = {|
@@ -42,7 +43,8 @@ export type relayCreateListMutationVariables = {|
 |};
 export type relayCreateListMutationResponse = {|
   +createChristmasList: {|
-    +_id: string
+    +_id: string,
+    +key: string,
   |}
 |};
 export type relayCreateListMutation = {|
@@ -58,6 +60,7 @@ mutation relayCreateListMutation(
 ) {
   createChristmasList(data: $data) {
     _id
+    key
   }
 }
 */
@@ -93,6 +96,13 @@ v1 = [
         "name": "_id",
         "args": null,
         "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "key",
+        "args": null,
+        "storageKey": null
       }
     ]
   }
@@ -117,11 +127,11 @@ return {
     "operationKind": "mutation",
     "name": "relayCreateListMutation",
     "id": null,
-    "text": "mutation relayCreateListMutation(\n  $data: ChristmasListInput!\n) {\n  createChristmasList(data: $data) {\n    _id\n  }\n}\n",
+    "text": "mutation relayCreateListMutation(\n  $data: ChristmasListInput!\n) {\n  createChristmasList(data: $data) {\n    _id\n    key\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '3468ff8cd7b562962e26ff4ca15c3f9e';
+(node/*: any*/).hash = 'a904f71a961d72e06ae4832e4a716c3c';
 module.exports = node;

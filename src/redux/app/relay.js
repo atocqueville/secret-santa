@@ -4,6 +4,7 @@ export const createChristmasList = graphql`
   mutation relayCreateListMutation($data: ChristmasListInput!) {
     createChristmasList(data: $data) {
       _id
+      key
     }
   }
 `;

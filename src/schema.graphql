@@ -1,5 +1,6 @@
 type ChristmasList {
   title: String!
+  key: String!
   participants: [Participant] @relation
 }
 

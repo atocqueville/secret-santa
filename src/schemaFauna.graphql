@@ -9,16 +9,18 @@ directive @relation(name: String) on FIELD_DEFINITION
 directive @unique(index: String) on FIELD_DEFINITION
 type ChristmasList {
   _id: ID!
-  _ts: Long!
-  title: String!
   participants(
     _size: Int
     _cursor: String
   ): ParticipantPage!
+  key: String!
+  title: String!
+  _ts: Long!
 }
 
 input ChristmasListInput {
   title: String!
+  key: String!
   participants: ChristmasListParticipantsRelation
 }
 

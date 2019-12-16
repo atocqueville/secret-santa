@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dedac5869d3ca3b412a50dfef15deb9d
+ * @relayHash b1191decc55d8e4cc479c6ba029f323f
  */
 
 /* eslint-disable */
@@ -22,6 +22,7 @@ export type ParticipantListRelation = {|
 |};
 export type ChristmasListInput = {|
   title: string,
+  key: string,
   participants?: ?ChristmasListParticipantsRelation,
 |};
 export type ChristmasListParticipantsRelation = {|
