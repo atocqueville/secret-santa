@@ -8,10 +8,14 @@ export async function handler(event) {
   } while (!passTest(tableauNoel))
 
   tableauNoel.forEach(person => {
-    const { forbidden, secretSanta, id, ...details } = participants[person.secretSanta];
+    const { name } = participants[person.secretSanta];
+    person.giftTo = name;
+  })
+
+  tableauNoel.forEach(person => {
     delete person.id
     delete person.forbidden
-    person.secretSanta = details;
+    delete person.secretSanta
   })
   
   return {
