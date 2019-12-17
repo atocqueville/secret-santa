@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import { Grid } from '@material-ui/core';
 
 import PersonFields from './PersonFields';
 import validate from './validator';
 import * as actions from '../../../../redux/app/ducks';
+
+import TextField from '../../../../components/TextField';
 import BottomActions from './BottomActions';
 
 function FormCreation({ firstForm, updateStepper, submitCreateForm }) {
@@ -28,6 +31,9 @@ function FormCreation({ firstForm, updateStepper, submitCreateForm }) {
         values
       }) =>
         <form onSubmit={handleSubmit}>
+          <Grid style={{ display: 'flex', justifyContent: 'center', paddingBottom: 10 }}>
+            <TextField label="Nom du groupe" name="listName" />
+          </Grid>
           <FieldArray name="participants">
             {({ fields }) => fields.map(name => <PersonFields id={name} key={name} />)}
           </FieldArray>

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b1191decc55d8e4cc479c6ba029f323f
+ * @relayHash 74863d6f78a64210b7800add874e6d5a
  */
 
 /* eslint-disable */
@@ -13,7 +13,7 @@ export type ParticipantInput = {|
   name: string,
   mail: string,
   list?: ?ParticipantListRelation,
-  secretSanta?: ?ParticipantSecretSantaRelation,
+  giftTo: string,
 |};
 export type ParticipantListRelation = {|
   create?: ?ChristmasListInput,
@@ -29,14 +29,6 @@ export type ChristmasListParticipantsRelation = {|
   create?: ?$ReadOnlyArray<?ParticipantInput>,
   connect?: ?$ReadOnlyArray<?string>,
   disconnect?: ?$ReadOnlyArray<?string>,
-|};
-export type ParticipantSecretSantaRelation = {|
-  create?: ?SecretSantaInput,
-  connect?: ?string,
-|};
-export type SecretSantaInput = {|
-  name: string,
-  mail: string,
 |};
 export type relayCreateParticipantMutationVariables = {|
   data: ParticipantInput

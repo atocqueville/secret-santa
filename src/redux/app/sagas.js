@@ -1,14 +1,10 @@
 import { commitMutation } from '../../helpers/relay';
 import { put, takeLatest, select } from 'redux-saga/effects';
-// import * as actions from './ducks';
+import * as actions from './ducks';
 import { MERGE_FORMS } from './ducks';
 
 import { createChristmasList, createParticipant } from './relay';
 import ID from '../../helpers/generatorID';
-
-function IDgen () {
-  return '_' + Math.random().toString(36).substr(2, 9);
-};
 
 const getAppState = (state) => state.app;
 
@@ -17,34 +13,52 @@ function* computeSanta() {
   const finalForm = firstForm.participants.map(
     (person, index) => ({ ...person, ...secondForm.restrictions[index] })
   );
+
   try {
+    // COMPUTE SECRET SANTA WITH NETLIFY FUNCTION
+    yield put(actions.updateLoading(true, "Attribution des pères Noël..."))
     const responseFunc = yield fetch('/.netlify/functions/computeSanta', {
       method: 'POST',
       body: JSON.stringify(finalForm)
     });
     const formWithSanta = yield responseFunc.json();
-    console.log('form final', formWithSanta)
 
-    // CREATION DE LA LISTE + RECUPERATION ID
+
+    // CREATION DE LA LISTE + RECUPERATION ID AND KEY
+    yield put(actions.updateLoading(true, "Creation d'une nouvelle liste de Noël..."))
     const { createChristmasList: list } = yield commitMutation({ mutation: createChristmasList, variables:
-      { data: { title: "Test" + IDgen(), key: ID() } }
+      { data: { title: firstForm.listName, key: ID() } }
     });
+    yield put(actions.updateListKey(list.key))
+
 
     // AJOUT PARTICIPANTS DANS DB AVEC ID LIST
     for (const participant of formWithSanta) {
-      console.log('part', participant)
-      const { createParticipant: res} = yield commitMutation({ mutation: createParticipant, variables:
+      yield put(actions.updateLoading(
+        true, `Enregistrement dans la base de données... ${formWithSanta.indexOf(participant) + 1}/${formWithSanta.length}`
+      ));
+      yield commitMutation({ mutation: createParticipant, variables:
         { data: {
           ...participant,
           list: { connect: list._id },
-          secretSanta: {
-            create: participant.secretSanta
-          }
         }}
       });
-      console.log('relay response', res)
     }
 
+
+    // SEND EACH PARTICIPANTS IN NETLIFY FUNCTION MAILING
+    for (const participant of formWithSanta) {
+      yield put(actions.updateLoading(
+        true, `Envoi des mails aux pères Noël... ${formWithSanta.indexOf(participant) + 1}/${formWithSanta.length}`
+      ))
+      yield fetch('/.netlify/functions/sendMail', {
+        method: 'POST',
+        body: JSON.stringify(participant)
+      });
+      // const resMail = yield resJSON.json();
+    }
+
+    yield put(actions.updateLoading(false, ""))
   } catch (e) { console.log("error", e) }
 }
 

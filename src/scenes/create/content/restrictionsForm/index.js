@@ -27,10 +27,10 @@ function RestrictionForm({
   }
   
   const notEmptyIV = () => {
-    while (firstForm.participants.length !== secondForm.restrictions.length) {
+    while (firstForm.participants.length > secondForm.restrictions.length) {
       secondForm.restrictions.push({ forbidden: [] })
     }
-    while (firstForm.participants.length !== secondForm.restrictions.length) {
+    while (firstForm.participants.length < secondForm.restrictions.length) {
       secondForm.restrictions.pop()
     }
     return secondForm;
