@@ -8,10 +8,5 @@ type Participant {
   name: String!
   mail: String!
   list: ChristmasList
-  secretSanta: SecretSanta!
-}
-
-type SecretSanta {
-  name: String!
-  mail: String!
+  giftTo: String!
 }

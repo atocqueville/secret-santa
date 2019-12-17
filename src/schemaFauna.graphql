@@ -37,12 +37,6 @@ scalar Long
 type Mutation {
   createChristmasList(data: ChristmasListInput!): ChristmasList!
   deleteChristmasList(id: ID!): ChristmasList
-  updateSecretSanta(
-    id: ID!
-    data: SecretSantaInput!
-  ): SecretSanta
-  createSecretSanta(data: SecretSantaInput!): SecretSanta!
-  deleteSecretSanta(id: ID!): SecretSanta
   deleteParticipant(id: ID!): Participant
   updateChristmasList(
     id: ID!
@@ -58,7 +52,7 @@ type Mutation {
 type Participant {
   name: String!
   _id: ID!
-  secretSanta: SecretSanta!
+  giftTo: String!
   mail: String!
   list: ChristmasList
   _ts: Long!
@@ -68,7 +62,7 @@ input ParticipantInput {
   name: String!
   mail: String!
   list: ParticipantListRelation
-  secretSanta: ParticipantSecretSantaRelation
+  giftTo: String!
 }
 
 input ParticipantListRelation {
@@ -83,27 +77,9 @@ type ParticipantPage {
   before: String
 }
 
-input ParticipantSecretSantaRelation {
-  create: SecretSantaInput
-  connect: ID
-}
-
 type Query {
-  findParticipantByID(id: ID!): Participant
   findChristmasListByID(id: ID!): ChristmasList
-  findSecretSantaByID(id: ID!): SecretSanta
-}
-
-type SecretSanta {
-  _id: ID!
-  _ts: Long!
-  name: String!
-  mail: String!
-}
-
-input SecretSantaInput {
-  name: String!
-  mail: String!
+  findParticipantByID(id: ID!): Participant
 }
 
 scalar Time
