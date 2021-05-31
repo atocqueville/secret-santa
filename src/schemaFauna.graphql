@@ -1,0 +1,86 @@
+directive @embedded on OBJECT
+directive @collection(name: String!) on OBJECT
+directive @index(name: String!) on FIELD_DEFINITION
+directive @resolver(
+  name: String
+  paginated: Boolean! = false
+) on FIELD_DEFINITION
+directive @relation(name: String) on FIELD_DEFINITION
+directive @unique(index: String) on FIELD_DEFINITION
+type ChristmasList {
+  _id: ID!
+  participants(
+    _size: Int
+    _cursor: String
+  ): ParticipantPage!
+  key: String!
+  title: String!
+  _ts: Long!
+}
+
+input ChristmasListInput {
+  title: String!
+  key: String!
+  participants: ChristmasListParticipantsRelation
+}
+
+input ChristmasListParticipantsRelation {
+  create: [ParticipantInput]
+  connect: [ID]
+  disconnect: [ID]
+}
+
+scalar Date
+
+scalar Long
+
+type Mutation {
+  createChristmasList(data: ChristmasListInput!): ChristmasList!
+  deleteChristmasList(id: ID!): ChristmasList
+  deleteParticipant(id: ID!): Participant
+  updateChristmasList(
+    id: ID!
+    data: ChristmasListInput!
+  ): ChristmasList
+  createParticipant(data: ParticipantInput!): Participant!
+  updateParticipant(
+    id: ID!
+    data: ParticipantInput!
+  ): Participant
+}
+
+type Participant {
+  name: String!
+  _id: ID!
+  giftTo: String!
+  mail: String!
+  list: ChristmasList
+  _ts: Long!
+}
+
+input ParticipantInput {
+  name: String!
+  mail: String!
+  list: ParticipantListRelation
+  giftTo: String!
+}
+
+input ParticipantListRelation {
+  create: ChristmasListInput
+  connect: ID
+  disconnect: Boolean
+}
+
+type ParticipantPage {
+  data: [Participant]!
+  after: String
+  before: String
+}
+
+type Query {
+  findChristmasListByID(id: ID!): ChristmasList
+  findParticipantByID(id: ID!): Participant
+}
+
+scalar Time
+

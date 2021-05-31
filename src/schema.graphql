@@ -1,0 +1,12 @@
+type ChristmasList {
+  title: String!
+  key: String!
+  participants: [Participant] @relation
+}
+
+type Participant {
+  name: String!
+  mail: String!
+  list: ChristmasList
+  giftTo: String!
+}
